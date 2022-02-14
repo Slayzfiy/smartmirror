@@ -1,0 +1,19 @@
+{
+   "general_config": {
+      "visibility": "on",
+      "grid_place": "6"
+   },
+   "design_config": {
+      "font_size": "12",
+      "font_family": "Arial",
+      "background_color": "#000000"
+   },
+   "module_config": {
+      "mail": {
+         "email": "swpgang2021@outlook.comm",
+         "password": "94f3gAY#fEM@b#LS",
+         "mail_server": "outlook.office365.com",
+         "port": "993"
+      }
+   }
+}

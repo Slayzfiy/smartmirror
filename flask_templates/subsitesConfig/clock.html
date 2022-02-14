@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %} Clock - Smart Mirror {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block content %}
+
+    <form method="POST" id="clock-form" name="clock-form">
+        <input type="hidden" name="formModule" value="clock">
+        <div class="row">
+            <div class="col-md-9" style="height: 100%">
+                <div class="card">
+
+                    {% include './include/general_configuration.html' %}
+
+                </div>
+
+                <div class="card">
+                    <div class="card-header  d-flex justify-content-between">
+                        <h4 class="title">Design Settings</h4>
+                        <li class="dropdown nav-item" style="list-style: none">
+                            <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <div class="d-none d-lg-block d-xl-block"></div>
+                                <i class="fas fa-cogs"></i>
+                                <p class="d-lg-none">
+                                    Notifications
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-navbar bg-dark">
+                                <li class="nav-link"><a href="#" class="nav-item text-white">Default Settings</a>/li>
+                                <li class="nav-link"><a href="#" class="nav-item text-center text-white">Get help</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="fontSelection">Font Family</label><br>
+                                    <select name="font_family" class="p-2 config-select text-white" id="fontSelection" style="width: 80%;">
+                                        <option style="font-family:Arial" value="Arial">Arial</option>
+                                        <option style="font-family:Calibri" value="Calibri">Calibri</option>
+                                        <option style="font-family:Candara" value="Candara">Candara</option>
+                                        <option style="font-family:Century Gothic" value="Century Gothic">Century Gothic</option>
+                                        <option style="font-family:Consolas" value="Consolas">Consolas</option>
+                                        <option style="font-family:Dejavu Sans" value="Dejavu Sans">Dejavu Sans</option>
+                                        <option style="font-family:Franklin Gothic" value="Franklin Gothic">Franklin Gothic</option>
+                                        <option style="font-family:Gill Sans" value="Gill Sans">Gill Sans</option>
+                                        <option style="font-family:Helvetica" value="Helvetica">Helvetica</option>
+                                        <option style="font-family:Lucida Sans" value="Lucida Sans">Lucida Sans</option>
+                                        <option style="font-family:MS Sans Serif" value="MS Sans Serif">MS Sans Serif</option>
+                                        <option style="font-family:Neue Helvetica" value="Neue Helvetica">Neue Helvetica</option>
+                                        <option style="font-family:Optima" value="Optima">Optima</option>
+                                        <option style="font-family:Segoe UI" value="Segoe UI">Segoe UI</option>
+                                        <option style="font-family:Tahoma" value="Tahoma">Tahoma</option>
+                                        <option style="font-family:Trebuchet MS" value="Trebuchet MS">Trebuchet MS</option>
+                                        <option style="font-family:Verdana" value="Verdana">Verdana</option>
+                                    </select>
+                                    <span class="d-block">
+                                        <small class="ml-2">e.g. </small>
+                                        <small class="" id="fontPlaceholder">„The five boxing wizards jump quickly.“</small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3" style="display: flex; flex-direction: column; justify-content: space-around">
+                                <label for="slider">
+                                    <label>Font Size: </label>
+                                    <a id="font_size" class="text-danger font-weight-bold pl-1">{{ modules['clock'].config['design_config']['font_size'] }}</a>
+                                </label>
+                                <input type="range" min="12" max="28" step="2" value="{{ modules['clock'].config['design_config']['font_size'] }}" id="slider" name="font_size" style="width: 80%;">
+                                <a class="ml-2 font-italic" id="sampleText"><small>The five boxing wizards jump quickly.
+
+                                </small></a>
+                            </div>
+                            <div class="col-lg-3 pr-md-1">
+                                <div class="form-group">
+                                    <label>Background Color</label>
+                                    <input type="color" name="background_color" class="form-control bg-dark" value="{{ modules['clock'].config['design_config']['background_color'] }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card">
+                    <div class="card-header  d-flex justify-content-between">
+                        <h4 class="title">Module Settings</h4>
+                        <li class="dropdown nav-item" style="list-style: none">
+                            <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <div class="d-none d-lg-block d-xl-block"></div>
+                                <i class="fas fa-cogs"></i>
+                                <p class="d-lg-none">
+                                    Notifications
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-navbar bg-dark">
+                                <li class="nav-link"><a href="#" class="nav-item text-white">Default Settings</a>/li>
+                                <li class="nav-link"><a href="#" class="nav-item text-center text-white">Get help</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 pr-md-1">
+                                <div class="form-group">
+                                    <label>Background Color</label>
+                                    <input type="color" name="clock_background_color" class="form-control bg-dark" value="{{ modules['clock'].config['module_config']['clock_background_color'] }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3 px-md-1">
+                                <div class="form-group">
+                                    <label>Pointer Color</label>
+                                    <input type="color" name="pointer_color" class="form-control bg-dark" value="{{ modules['clock'].config['module_config']['pointer_color'] }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3 px-md-1">
+                                <div class="form-group">
+                                    <label>Number Color</label>
+                                    <input type="color" name="number_color" class="form-control bg-dark" value="{{ modules['clock'].config['module_config']['number_color'] }}">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <br>
+                                <input name="module" value="clock" hidden>
+                                <label for="time_zone_selection">Time Zone</label><br>
+                                <select name="timezone" class="p-2 config-select text-white" id="time_zone_selection">
+                                    <option value="1">[UTC + 1] Central European Time, West African Time</option>
+                                    <option value="-12">[UTC - 12] Baker Island Time</option>
+                                    <option value="-11">[UTC - 11] Niue Time, Samoa Standard Time</option>
+                                    <option value="-10">[UTC - 10] Hawaii-Aleutian Standard Time, Cook Island Time</option>
+                                    <option value="-9.5">[UTC - 9:30] Marquesas Islands Time</option>
+                                    <option value="-9">[UTC - 9] Alaska Standard Time, Gambier Island Time</option>
+                                    <option value="-8">[UTC - 8] Pacific Standard Time</option>
+                                    <option value="-7">[UTC - 7] Mountain Standard Time</option>
+                                    <option value="-6">[UTC - 6] Central Standard Time</option>
+                                    <option value="-5">[UTC - 5] Eastern Standard Time</option>
+                                    <option value="-4.5">[UTC - 4:30] Venezuelan Standard Time</option>
+                                    <option value="-4">[UTC - 4] Atlantic Standard Time</option>
+                                    <option value="-3.5">[UTC - 3:30] Newfoundland Standard Time</option>
+                                    <option value="-3">[UTC - 3] Amazon Standard Time, Central Greenland Time</option>
+                                    <option value="-2">[UTC - 2] Fernando de Noronha Time, South Georgia; the South Sandwich Islands Time</option>
+                                    <option value="-1">[UTC - 1] Azores Standard Time, Cape Verde Time, Eastern Greenland Time</option>
+                                    <option value="0">[UTC] Western European Time, Greenwich Mean Time</option>
+                                    <option value="2">[UTC + 2] Eastern European Time, Central African Time</option>
+                                    <option value="3">[UTC + 3] Moscow Standard Time, Eastern African Time</option>
+                                    <option value="3.5">[UTC + 3:30] Iran Standard Time</option>
+                                    <option value="4">[UTC + 4] Gulf Standard Time, Samara Standard Time</option>
+                                    <option value="4.5">[UTC + 4:30] Afghanistan Time</option>
+                                    <option value="5">[UTC + 5] Pakistan Standard Time, Yekaterinburg Standard Time</option>
+                                    <option value="5.5">[UTC + 5:30] Indian Standard Time, Sri Lanka Time</option>
+                                    <option value="5.75">[UTC + 5:45] Nepal Time</option>
+                                    <option value="6">[UTC + 6] Bangladesh Time, Bhutan Time, Novosibirsk Standard Time</option>
+                                    <option value="6.5">[UTC + 6:30] Cocos Islands Time, Myanmar Time</option>
+                                    <option value="7">[UTC + 7] Indochina Time, Krasnoyarsk Standard Time</option>
+                                    <option value="8">[UTC + 8] Chinese Standard Time, Australian Western Standard Time, Irkutsk Standard Time</option>
+                                    <option value="8.75">[UTC + 8:45] Southeastern Western Australia Standard Time</option>
+                                    <option value="9">[UTC + 9] Japan Standard Time, Korea Standard Time, Chita Standard Time</option>
+                                    <option value="9.5">[UTC + 9:30] Australian Central Standard Time</option>
+                                    <option value="10">[UTC + 10] Australian Eastern Standard Time, Vladivostok Standard Time</option>
+                                    <option value="10.5">[UTC + 10:30] Lord Howe Standard Time</option>
+                                    <option value="11">[UTC + 11] Solomon Island Time, Magadan Standard Time</option>
+                                    <option value="11.5">[UTC + 11:30] Norfolk Island Time</option>
+                                    <option value="12">[UTC + 12] New Zealand Time, Fiji Time, Kamchatka Standard Time</option>
+                                    <option value="12.75">[UTC + 12:45] Chatham Islands Time</option>
+                                    <option value="13">[UTC + 13] Tonga Time, Phoenix Islands Time</option>
+                                    <option value="14">[UTC + 14] Line Island Time</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="sticky-top">
+                    <div class="card card-user">
+                        <div class="card-body">
+                            <div class="author">
+                                <div class="block block-one"></div>
+                                <div class="block block-two"></div>
+                                <div class="block block-three"></div>
+                                <div class="block block-four"></div>
+                                <span id="clock-section">
+                                <canvas id="canvas" width="400" height="400"></canvas>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a>Module Preview</a>
+                            <a href="#">Reload<i class="fas fa-sync pl-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="fixed-bottom text-right">
+                    <button class="btn btn-primary m-3">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="/static/assets/js/modules/clock-module.js"></script>
+    <script src="/static/assets/js/general-functions.js"></script>
+
+    <script>
+        {#    default conf    #}
+        let configFontFamily = "{{ modules['clock'].config['design_config']['font_family'] }}";
+        let configFontSize = "{{ modules['clock'].config['design_config']['font_size'] }}";
+        let configBackgroundColor = "{{ modules['clock'].config['design_config']['background_color'] }}";
+        let configVisibility = "{{ modules['clock'].config['general_config']['visibility'] }}";
+        let gridSystem = "{{ modules['clock'].config['general_config']['grid_place'] | safe}}";
+        load_default_conf(configFontFamily, configFontSize, configBackgroundColor, configVisibility, gridSystem)
+
+        {#   module configuration   #}
+        let moduleBackgroundColor = "{{ modules['clock'].config['module_config']['clock_background_color'] }}";
+        let modulePointerColor = "{{ modules['clock'].config['module_config']['pointer_color'] }}";
+        let moduleNumberColor = "{{ modules['clock'].config['module_config']['number_color'] }}";
+        let moduleTimeZone = "{{ modules['clock'].config['module_config']['timezone'] }}";
+
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let radius = canvas.height / 2;
+        ctx.translate(radius, radius);
+        radius = radius * 0.7;
+
+        var clockTicker = setInterval(drawClock, 1000);
+        function drawClock() {
+            drawFace(ctx, radius, moduleBackgroundColor);
+            drawNumbers(ctx, radius, moduleNumberColor);
+            drawTime(ctx, radius, modulePointerColor, moduleTimeZone);
+        }
+
+        let currentTZOption = $('#time_zone_selection option[value="{{ modules['clock'].config['module_config']['timezone'] }}"]');
+        $(currentTZOption).attr('selected', 'selected')
+
+    </script>
+{% endblock javascripts %}

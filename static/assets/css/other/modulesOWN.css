@@ -1,0 +1,203 @@
+/*TODO*/
+.wrapperTodo{
+    width: 100%;
+    padding: 25px;
+    border-radius: 5px;
+}
+.wrapperTodo .inputField{
+    width: 100%;
+    display: flex;
+    height: 45px;
+}
+.inputField input{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    font-size: 17px;
+    padding-left: 15px;
+    transition: all 0.3s ease;
+}
+.inputField input:focus{
+    border-color: #8E49E8;
+}
+.inputField button{
+    width: 50px;
+    height: 100%;
+    border: none;
+    color: #fff;
+    margin-left: 5px;
+    font-size: 21px;
+    outline: none;
+    background-color: #e14eca;
+    cursor: pointer;
+    border-radius: 3px;
+    opacity: 0.6;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+.inputField button:hover,
+.footer button:hover{
+    background: #721ce3;
+}
+.inputField button.active{
+    opacity: 1;
+    pointer-events: auto;
+}
+.wrapperTodo .todoList{
+    overflow-y: auto;
+}
+.todoList li{
+    position: relative;
+    list-style: none;
+    margin-bottom: 8px;
+    background: rgba(242, 242, 242, 0.1);
+    border-radius: 3px;
+    padding: 10px 15px;
+    cursor: default;
+    overflow: hidden;
+    margin-left: -45px;
+    word-wrap: break-word;
+}
+.todoList li .icon{
+    position: absolute;
+    right: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #e74c3c;
+    width: 45px;
+    text-align: center;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 0 3px 3px 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.todoList li:hover .icon{
+    right: 0px;
+}
+.wrapperTodo .footer{
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/*STOCKS*/
+.stockTagWrapper{
+    display: flex;
+    gap: 15px;
+    flex-flow: row wrap;
+}
+.greenContainer{
+    display: inline;
+    justify-items: center;
+    align-items: center;
+    background: #000000;
+    background: -webkit-linear-gradient(to right, #ef473a, #cb2d3e);
+    background: linear-gradient(to right, #ef473a, #cb2d3e);
+    border-radius: 5px;
+    padding: 5px 5px 5px 5px;"
+}
+.greenContainersecond{
+    display: inline;
+    justify-items: center;
+    align-items: center;
+    background: #000000;
+    background: -webkit-linear-gradient(to right, #79a04d, #458b25);
+    background: linear-gradient(to right, #79a04d, #458b25);
+    border-radius: 5px;
+    padding: 5px 5px 5px 5px;"
+}
+.stockName{
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-left: 5px;
+}
+.stockClose{
+    margin-left: 5px;
+    color: black
+}
+
+::selection{
+    color: #fff;
+    background: #664AFF;
+}
+.wrapperSearch{
+    max-width: 450px;
+}
+.wrapperSearch .search-input{
+    background: #fff;
+    width: 100%;
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 1px 5px 3px rgba(0,0,0,0.12);
+}
+.search-input input{
+    height: 55px;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 0 60px 0 20px;
+    font-size: 18px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+.search-input.active input{
+    border-radius: 5px 5px 0 0;
+}
+.search-input .autocom-box{
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.search-input.active .autocom-box{
+    padding: 10px 8px;
+    opacity: 1;
+    pointer-events: auto;
+}
+.autocom-box li{
+    list-style: none;
+    padding: 8px 12px;
+    display: none;
+    width: 100%;
+    cursor: default;
+    border-radius: 3px;
+}
+.search-input.active .autocom-box li{
+    display: block;
+}
+.autocom-box li:hover{
+    background: #efefef;
+}
+.search-input .icon{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 55px;
+    width: 55px;
+    text-align: center;
+    line-height: 55px;
+    font-size: 20px;
+    color: #ba54f5;
+    cursor: pointer;
+}
+
+.grid-container{
+    background: grey !important;
+    padding: 50px 100px;
+    margin: 3px;
+    border-radius: 3px;
+}
+input[type="checkbox"].check{
+    opacity: 0 !important;
+}
+.check:checked + label{
+    background: purple !important;
+    border-color: #eeabab;
+    box-shadow: 0 0 10px rgba(155, 103, 180, 0.93);
+}

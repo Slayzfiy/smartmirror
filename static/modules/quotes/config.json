@@ -1,0 +1,14 @@
+{
+   "general_config": {
+      "visibility": "on",
+      "grid_place": "4"
+   },
+   "design_config": {
+      "font_size": "12",
+      "font_family": "Arial",
+      "background_color": "#000000"
+   },
+   "module_config": {
+      "max_quote_length": "50"
+   }
+}

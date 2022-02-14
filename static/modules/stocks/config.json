@@ -1,0 +1,19 @@
+{
+   "general_config": {
+      "visibility": "on",
+      "grid_place": "3"
+   },
+   "design_config": {
+      "font_size": "18",
+      "font_family": "Consolas",
+      "background_color": "#9f2323"
+   },
+   "module_config": {
+      "watchlist": [
+         "GME",
+         "GMAB",
+         "APP"
+      ],
+      "currency": "USD"
+   }
+}

@@ -1,0 +1,26 @@
+<div class="d-flex content-wrapper">
+    <div class="sidebar"></div>
+    <div id="clock">
+        <script>
+            function add_time_zones(key){
+                const select = document.getElementById('time_zone_selection')
+                let time_inner_html = "<option value=" + KEY + ">" + KEY + "</option>"
+                select.innerHTML += time_inner_html
+            }
+        </script>
+        <div class="container-fluid mt-5 card p-5">
+            <h4 class="card-title text-center mb-2">Clock Settings</h4>
+            <div class="row">
+                <div class="col-md">
+                    <h5>Time Zone</h5>
+                    <form name="timezones" method="POST">
+                        <label for="time_zone_selection"></label><select name="timezones" class="p-2" id="time_zone_selection" onchange="this.form.submit()">
+                        :::REPLACEMARKER:::
+                    </select>
+                    </form>
+                    <div class="mt-5"></div> <!-- Spacer -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

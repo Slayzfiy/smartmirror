@@ -1,0 +1,105 @@
+        <div class="card-header d-flex justify-content-between">
+            <h4 class="title">General Settings</h4>
+            <li class="dropdown nav-item" style="list-style: none">
+                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                    <div class="d-none d-lg-block d-xl-block"></div>
+                    <i class="fas fa-cogs"></i>
+                    <p class="d-lg-none">
+                        Notifications
+                    </p>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right dropdown-navbar bg-dark">
+                    <li class="nav-link"><a class="nav-item text-white restoreSettings">Default Settings</a></li>
+                    <li class="nav-link"><a href="#" class="nav-item text-center text-white">Get help</a></li>
+                </ul>
+            </li>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label for="visibility">Show Module</label><br>
+                    <div class="d-flex align-items-center">
+                        <label class="switch">
+                            <input id="visibility" name="visibility" type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                        <small id="visibilityText" class="ml-2"></small>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label for="visibility">Export Config of this module</label><br>
+                    <div class="d-flex align-items-center">
+                        <label class="export">
+                            <button id="export_config" class="btn btn-primary">EXPORT</button>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label for="visibility">Import config of this module</label><br>
+                    <div class="d-flex align-items-center">
+                        <form id="import_config_form" enctype="multipart/form-data">
+                            <label class="export">
+                                <label for="import_config_input" class="btn btn-primary" id="import_config_label">Choose File</label>
+                                <input type="file" id="import_config_input" hidden >
+                                <button id="import_config_button" type="submit"> abschickn</button>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body justify-content-center">
+            <label>Grid System</label>
+            <div class="row p-1 ">
+                <input id="grid-1-input" type="checkbox" name="grid_system" class="check" value="1">
+                <label for="grid-1-input" class="grid-container">
+                    Column 1
+                </label>
+                <input id="grid-2-input" type="checkbox" name="grid_system" class="check" value="2">
+                <label for="grid-2-input" class="grid-container">
+                    Column 2
+                </label>
+                <input id="grid-3-input" type="checkbox" name="grid_system" class="check" value="3">
+                <label for="grid-3-input" class="grid-container">
+                    Column 3
+                </label>
+            </div>
+            <div class="row p-1 ">
+                <input id="grid-4-input" type="checkbox" name="grid_system" class="check" value="4">
+                <label for="grid-4-input" class="grid-container">
+                    Column 4
+                </label>
+                <input id="grid-5-input" type="checkbox" name="grid_system" class="check" value="5">
+                <label for="grid-5-input" class="grid-container">
+                    Column 5
+                </label>
+                <input id="grid-6-input" type="checkbox" name="grid_system" class="check" value="6">
+                <label for="grid-6-input" class="grid-container">
+                    Column 6
+                </label>
+            </div>
+        </div>
+<style>
+    #import_config_label{
+        background: #e14eca !important;
+        background-color: rgb(225, 78, 202) !important;
+        background-image: -webkit-linear-gradient(to bottom left, #e14eca, #ba54f5, #e14eca) !important;
+        background-image: -o-linear-gradient(to bottom left, #e14eca, #ba54f5, #e14eca) !important;
+        background-image: -moz-linear-gradient(to bottom left, #e14eca, #ba54f5, #e14eca) !important;
+        background-image: linear-gradient(to bottom left, #e14eca, #ba54f5, #e14eca) !important;
+        background-size: 210% 210% !important;
+        background-position: top right !important;
+        background-color: #e14eca !important;
+        transition: all 0.15s ease !important;
+        box-shadow: none !important;
+        color: #ffffff !important;
+    }
+</style>
+
+        <script>
+            $("#import_config_button").click(function (e){
+
+                alert($("#import_config_form").serialize())
+
+            })
+        </script>

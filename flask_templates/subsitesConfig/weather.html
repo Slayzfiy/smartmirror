@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %} Clock - Smart Mirror {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block content %}
+
+    <form method="POST" id="weather-form" name="weather-form">
+        <input type="hidden" name="formModule" value="weather">
+        <div class="row">
+            <div class="col-md-9" style="height: 100%">
+                <div class="card">
+
+                    {% include './include/general_configuration.html' %}
+
+                </div>
+                <div class="card">
+                    <div class="card-header  d-flex justify-content-between">
+                        <h4 class="title">Design Settings</h4>
+
+                        <li class="dropdown nav-item" style="list-style: none">
+                            <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <div class="d-none d-lg-block d-xl-block"></div>
+                                <i class="fas fa-cogs"></i>
+                                <p class="d-lg-none">
+                                    Notifications
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-navbar bg-dark">
+                                <li class="nav-link"><a href="#" class="nav-item text-white">Default Settings</a>/li>
+                                <li class="nav-link"><a href="#" class="nav-item text-center text-white">Get help</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="fontSelection">Font Family</label><br>
+                                    <select name="font_family" class="p-2 config-select text-white" id="fontSelection" style="width: 80%;">
+                                        <option style="font-family:Arial" value="Arial">Arial</option>
+                                        <option style="font-family:Calibri" value="Calibri">Calibri</option>
+                                        <option style="font-family:Candara" value="Candara">Candara</option>
+                                        <option style="font-family:Century Gothic" value="Century Gothic">Century Gothic</option>
+                                        <option style="font-family:Consolas" value="Consolas">Consolas</option>
+                                        <option style="font-family:Dejavu Sans" value="Dejavu Sans">Dejavu Sans</option>
+                                        <option style="font-family:Franklin Gothic" value="Franklin Gothic">Franklin Gothic</option>
+                                        <option style="font-family:Gill Sans" value="Gill Sans">Gill Sans</option>
+                                        <option style="font-family:Helvetica" value="Helvetica">Helvetica</option>
+                                        <option style="font-family:Lucida Sans" value="Lucida Sans">Lucida Sans</option>
+                                        <option style="font-family:MS Sans Serif" value="MS Sans Serif">MS Sans Serif</option>
+                                        <option style="font-family:Neue Helvetica" value="Neue Helvetica">Neue Helvetica</option>
+                                        <option style="font-family:Optima" value="Optima">Optima</option>
+                                        <option style="font-family:Segoe UI" value="Segoe UI">Segoe UI</option>
+                                        <option style="font-family:Tahoma" value="Tahoma">Tahoma</option>
+                                        <option style="font-family:Trebuchet MS" value="Trebuchet MS">Trebuchet MS</option>
+                                        <option style="font-family:Verdana" value="Verdana">Verdana</option>
+                                    </select>
+                                    <span class="d-block">
+                                        <small class="ml-2">e.g. </small>
+                                        <small class="" id="fontPlaceholder">„The five boxing wizards jump quickly.“</small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3" style="display: flex; flex-direction: column; justify-content: space-around">
+                                <label for="slider">
+                                    <label>Font Size: </label>
+                                    <a id="font_size" class="text-danger font-weight-bold pl-1">{{ modules['weather'].config['design_config']['font_size'] }}</a>
+                                </label>
+                                <input type="range" min="12" max="28" step="2" value="{{ modules['weather'].config['design_config']['font_size'] }}" id="slider" name="font_size" style="width: 80%;">
+                                <a class="ml-2 font-italic" id="sampleText"><small>The five boxing wizards jump quickly.
+
+                                </small></a>
+                            </div>
+                            <div class="col-lg-3 pr-md-1">
+                                <div class="form-group">
+                                    <label>Background Color</label>
+                                    <input type="color" name="background_color" class="form-control bg-dark" value="{{ modules['weather'].config['design_config']['background_color'] }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header  d-flex justify-content-between">
+                        <h4 class="title">Module Settings</h4>
+                        <li class="dropdown nav-item" style="list-style: none">
+                            <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <div class="d-none d-lg-block d-xl-block"></div>
+                                <i class="fas fa-cogs"></i>
+                                <p class="d-lg-none">
+                                    Notifications
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-navbar bg-dark">
+                                <li class="nav-link"><a href="#" class="nav-item text-white">Default Settings</a>/li>
+                                <li class="nav-link"><a href="#" class="nav-item text-center text-white">Get help</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label>API-Key</label>
+                                <input type="text" class="form-control flex-fill" name="api_key" value="{{ modules['weather'].config['module_config']['api_key'] }}" placeholder="{{ modules['weather'].config['module_config']['api_key'] }}">                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label>Location</label>
+                                <input type="text" class="form-control  flex-fill" name="location" value="{{ modules['weather'].config['module_config']['location'] }}" placeholder="{{ modules['weather'].config['module_config']['location'] }}">                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="sticky-top">
+                    <div class="card card-user">
+                        <div class="card-body">
+                            <div class="author">
+                                <div class="block block-one"></div>
+                                <div class="block block-two"></div>
+                                <div class="block block-three"></div>
+                                <div class="block block-four"></div>
+
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a>Module Preview</a>
+                            <a href="#">Reload<i class="fas fa-sync pl-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="fixed-bottom text-right">
+                    <button class="btn btn-primary m-3">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="/static/assets/js/modules/clock-module.js"></script>
+    <script src="/static/assets/js/general-functions.js"></script>
+
+    <script>
+        {#    default conf    #}
+        let configFontFamily = "{{ modules['weather'].config['design_config']['font_family'] }}";
+        let configFontSize = "{{ modules['weather'].config['design_config']['font_size'] }}";
+        let configBackgroundColor = "{{ modules['weather'].config['design_config']['background_color'] }}";
+        let configVisibility = "{{ modules['weather'].config['general_config']['visibility'] }}";
+        let gridSystem = "{{ modules['weather'].config['general_config']['grid_place'] | safe}}";
+        load_default_conf(configFontFamily, configFontSize, configBackgroundColor, configVisibility, gridSystem)
+
+        {#   module configuration   #}
+        let moduleLocation = "{{ modules['weather'].config['module_config']['location'] }}";
+        let moduleAPIKey = "{{ modules['weather'].config['module_config']['api_key'] }}";
+
+
+
+    </script>
+{% endblock javascripts %}

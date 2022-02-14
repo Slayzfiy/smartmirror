@@ -1,0 +1,15 @@
+{
+   "general_config": {
+      "visibility": "on",
+      "grid_place": "5"
+   },
+   "design_config": {
+      "font_size": "14",
+      "font_family": "Arial",
+      "background_color": "#000000"
+   },
+   "module_config": {
+      "location": "K\u00f6ssen",
+      "api_key": "efa641741e55028e228a83e92c7fbc5a"
+   }
+}

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="DE">
+<head>
+    <link href="/static/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+    <script src="/static/assets/js/core/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <title>Front End - Smart Mirror</title>
+</head>
+    <body>
+        <style>
+            .gridContainer{
+                display: grid;
+                grid-template-columns: auto auto auto;
+            }
+            .grid-item{
+                border: 1px solid rgba(0, 0, 0, 0.8);
+                padding: 20px;
+                font-size: 30px;
+                text-align: center;
+            }
+
+            /* Weather Styles*/
+            .cities {
+                display: grid;
+                grid-gap: 32px 20px;
+                grid-template-columns: repeat(1, 1fr);
+            }
+            .city {
+                position: relative;
+                padding: 5px 10%;
+                border-radius: 20px;
+                background: var(--bg_grey);
+                color: var(--text_light);
+                list-style: none;
+            }
+            figcaption {
+                margin-top: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+            .city-temp {
+                font-size: 5rem;
+                color: var(--text_light);
+            }
+            .city sup {
+                font-size: 0.5em;
+            }
+            .city-name sup {
+                padding: 0.2em 0.6em;
+                border-radius: 30px;
+                color: var(--text_light);
+                background: var(--orange);
+            }
+            .city-icon {
+                color: var(--text_light);
+            }
+
+
+
+            .weatherContainer{
+
+            }
+            .clockContainer{
+
+            }
+            .stockContainer{
+
+            }
+            .quotesContainer{
+
+            }
+            .todoContainer{
+
+            }
+            .mailsContainer{
+
+            }
+
+
+        </style>
+
+        <div class="gridContainer">
+            <div class="grid-item todoContainer">
+                {% include 'subsitesModules/todo_module.html' %}
+            </div>
+            <div class="grid-item mailsContainer">
+                {% include 'subsitesModules/mails_module.html' %}
+            </div>
+            <div class="grid-item clockContainer">
+                {% include 'subsitesModules/clock_module.html' %}
+            </div>
+            <div class="grid-item weatherContainer">
+                {% include 'subsitesModules/weather_module.html' %}
+            </div>
+            <div class="grid-item stockContainer">
+                {% include 'subsitesModules/stock_module.html' %}
+            </div>
+            <div class="grid-item quotesContainer">
+                {% include 'subsitesModules/quotes_module.html' %}
+            </div>
+        </div>
+
+        <div id="configuration-button" style="position: fixed;bottom: 0">
+            <a class="p-3" style="position: absolute; bottom:0;" href="/dashboard.html">
+                <button type="button" class="btn btn-primary" >Configuration</button>
+            </a>
+        </div>
+    </body>
+
+    <script src="{{url_for('static', filename='vendor/own/minified/scripts.min.js')}}"></script>
+
+    <script src="/static/assets/js/modules/clock-module.js"></script>
+    <script>
+
+        function module_data_load(){
+            function handle_mails(mailList){
+                notify("worked", "success")
+                let html = "";
+                if (mailList){
+                    let mails = JSON.parse(mailList)['mails'];
+
+                    for(let i = 0; i < mails.length; i++){
+                        html += `
+                    <li class="list-group-item bg-dark mb-1">
+                        <div class="d-flex" style="justify-content: space-between">
+                            <div>
+                                <a>Re: <b>` + mails[i]['subject'] + `</b></a>
+                            </div>
+                            <div>
+                                <a style="color: var(--orange) !important;">` + mails[i]['date'] + `</a>
+                            </div>
+                        </div>
+                    </li>
+                    `
+                    }
+                }
+                else{
+                    html += "Wrong E-Mail credentials or no mails, please check in <a href='/todo'>Mail Settings</a>"
+                }
+
+
+                $("#mailsList").html(html)
+            }
+
+            function handle_todos(todoList){
+                let todos = JSON.parse(todoList)['todo_entries'];
+                let max_entry_index = todos.length;
+                if (max_entry_index >= 6){
+                    max_entry_index = 6;
+                }
+
+                let html = "";
+                for(let i=0; i < max_entry_index; i++){
+                    html += `
+                <li class="list-group-item bg-dark mb-1"><a>` + todos[i] + `</a></li>
+                `
+                }
+                $('#todoList').html(html);
+            }
+
+            function handle_quote(quote) {
+                let rawQuote = JSON.parse(quote)
+                $("#quotePlaceholder").text(rawQuote['quote']['text'])
+                $("#authorPlaceholder").text(rawQuote['quote']['author'])
+            }
+
+            function handle_weather(weatherData){
+                let rawWeather = JSON.parse(weatherData)
+                $("#descriptionPlaceholder").text(rawWeather['description'])
+                $("#tempPlaceholder").text(rawWeather['temp'])
+                $("#countryPlaceholder").text(rawWeather['country'])
+                $("#cityPlaceholder").text(rawWeather['city'])
+                $("#imagePlaceholder").attr("src", rawWeather['icon'])
+            }
+
+            function handle_stocks(stockData) {
+                let rawStock = JSON.parse(stockData)["stock"]
+                $("#stockPlaceholder").text(rawStock['name'])
+                $("#pricePlaceholder").text(rawStock['current_price'])
+                $("#percentagePlaceholder").text(rawStock['difference_in_percent'])
+
+                $("#stockImagePlaceholder").attr("src", rawStock['logoURI'])
+            }
+
+            function load_mails(){
+                $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "/mail",
+                    data: {"type": "fetch_mails"},
+                    success:function (response){
+                        handle_mails(response)
+                    },
+                    error:function (){
+                        $("#mailsList").text("Wrong mail settings!")
+                    }
+                });
+            }
+
+            function load_todos(){
+                $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "/todo",
+                    data: {"type": "fetch_todo"},
+                    success:function (response){
+                        handle_todos(response)
+                    },
+                    error:function (){
+                        handle_mails("")
+                    }
+                });
+            }
+
+            function load_quotes(){
+                $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "/quotes",
+                    data: {"type": "fetch_quote"},
+                    success:function (response){
+                        handle_quote(response)
+                    },
+                    error:function (){
+                        handle_quote("")
+                    }
+                });
+            }
+
+            function load_weather(){
+                $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "/weather",
+                    data: {"type": "fetch_weather"},
+                    success:function (response){
+                        handle_weather(response)
+                    },
+                    error:function (){
+                        handle_weather("")
+                    }
+                });
+            }
+
+            function load_stocks(){
+                $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "/stocks",
+                    data: {"type": "fetch_stocks"},
+                    success:function (response){
+                        handle_stocks(response)
+                    },
+                    error:function (){
+                        handle_stocks("")
+                    }
+                });
+            }
+
+            function clock_stuff(){
+                let moduleBackgroundColor = "{{ modules['clock'].config['module_config']['clock_background_color'] }}";
+                let modulePointerColor = "{{ modules['clock'].config['module_config']['pointer_color'] }}";
+                let moduleNumberColor = "{{ modules['clock'].config['module_config']['number_color'] }}";
+                let moduleTimeZone = "{{ modules['clock'].config['module_config']['timezone'] }}";
+
+                let canvas = document.getElementById("module_clock");
+
+                let ctx = canvas.getContext("2d");
+                let radius = canvas.height / 2;
+                ctx.translate(radius, radius);
+                radius = radius * 0.7;
+
+                var clockTicker = setInterval(drawClock, 1000);
+                function drawClock() {
+                    drawFace(ctx, radius, moduleBackgroundColor);
+                    drawNumbers(ctx, radius, moduleNumberColor);
+                    drawTime(ctx, radius, modulePointerColor, moduleTimeZone);
+                }
+            }
+
+            load_mails();
+            load_todos();
+            load_quotes();
+            load_weather();
+            load_stocks();
+            clock_stuff();
+        }
+
+        function module_config_load(){
+            function handle_config(config){
+                let module_config = JSON.parse(config)['global_module_config'];
+                apply_general_config(module_config)
+                apply_design_config(module_config)
+            }
+
+            $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "/config",
+                    data: {"type": "fetch_all_config_files"},
+                    success:function (response){
+                        handle_config(response)
+                    },
+                    error:function (){
+                        alert('error')
+                    }
+                });
+
+
+
+            function apply_general_config(config){
+                let clock_config = config[0]["clock"]["general_config"]
+                let todo_config = config[1]["todo"]["general_config"]
+                let weather_config = config[2]["weather"]["general_config"]
+                let quotes_config = config[3]["quotes"]["general_config"]
+                let mail_config = config[4]["mail"]["general_config"]
+                let stock_config = config[5]["stocks"]["general_config"]
+
+                if (clock_config['visibility'] === "off"){ $(".clockContainer").remove()}
+                if (todo_config['visibility'] === "off"){$(".todoContainer").remove()}
+                if (weather_config['visibility'] === "off"){$(".weatherContainer").remove()}
+                if (quotes_config['visibility'] === "off"){$(".quotesContainer").remove()}
+                if (mail_config['visibility'] === "off"){$(".mailsContainer").remove()}
+                if (stock_config['visibility'] === "off"){$(".stockContainer").remove()}
+
+                $(".todoContainer").css("order", parseInt(clock_config['grid_place']))
+                $(".clockContainer").css("order", parseInt(todo_config['grid_place']))
+                $(".mailsContainer").css("order", parseInt(weather_config['grid_place']))
+                $(".quotesContainer").css("order", parseInt(quotes_config['grid_place']))
+                $(".stockContainer").css("order", parseInt(mail_config['grid_place']))
+                $(".weatherContainer").css("order", parseInt(stock_config['grid_place']))
+            }
+
+            function apply_design_config(config){
+                let clock_config = config[0]["clock"]["design_config"]
+                let todo_config = config[1]["todo"]["design_config"]
+                let weather_config = config[2]["weather"]["design_config"]
+                let quotes_config = config[3]["quotes"]["design_config"]
+                let mail_config = config[4]["mail"]["design_config"]
+                let stock_config = config[5]["stocks"]["design_config"]
+
+
+
+                $(".clockContainer").css({
+                    "background": clock_config["background_color"],
+                    "font-size": clock_config["font_size"],
+                    "font-family": clock_config["font_family"]
+                })
+                 $(".todoContainer").css({
+                    "background": todo_config["background_color"],
+                    "font-size": todo_config["font_size"],
+                    "font-family": todo_config["font_family"]
+                })
+                 $(".weatherContainer").css({
+                    "background": weather_config["background_color"],
+                    "font-size": weather_config["font_size"],
+                    "font-family": weather_config["font_family"]
+                })
+                 $(".stockContainer").css({
+                    "background": stock_config["background_color"],
+                    "font-size": stock_config["font_size"],
+                    "font-family": stock_config["font_family"]
+                })
+                 $(".quotesContainer").css({
+                    "background": quotes_config["background_color"],
+                    "font-size": quotes_config["font_size"],
+                    "font-family": quotes_config["font_family"]
+                })
+                
+            }
+
+        }
+
+        module_config_load();
+        module_data_load();
+
+
+    </script>
+
+</html>
+

@@ -1,0 +1,11 @@
+rjsmin==1.1.0
+Flask==2.0.1
+IMAPClient==2.2.0
+requests==2.25.1
+beautifulsoup4==4.9.3
+libsass==0.21.0
+DateTime~=4.3
+bs4~=0.0.1
+future~=0.18.2
+imap-tools~=0.41.0
+yfinance

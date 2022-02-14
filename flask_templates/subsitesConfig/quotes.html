@@ -1,0 +1,219 @@
+
+{% extends "base.html" %}
+
+{% block title %} Quotes - Smart Mirror {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block content %}
+
+    <form method="POST" id="quotes-form" name="quotes-form">
+        <input type="hidden" name="formModule" value="quotes">
+        <div class="row">
+            <div class="col-md-9" style="height: 100%">
+                <div class="card">
+
+                    {% include './include/general_configuration.html' %}
+
+                </div>
+                <div class="card">
+                    <div class="card-header  d-flex justify-content-between">
+                        <h4 class="title">Design Settings</h4>
+
+                        <li class="dropdown nav-item" style="list-style: none">
+                            <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <div class="d-none d-lg-block d-xl-block"></div>
+                                <i class="fas fa-cogs"></i>
+                                <p class="d-lg-none">
+                                    Notifications
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-navbar bg-dark">
+                                <li class="nav-link"><a href="#" class="nav-item text-white">Default Settings</a>/li>
+                                <li class="nav-link"><a href="#" class="nav-item text-center text-white">Get help</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="fontSelection">Font Family</label><br>
+                                    <select name="font_family" class="p-2 config-select text-white" id="fontSelection" style="width: 80%;">
+                                        <option style="font-family:Arial" value="Arial">Arial</option>
+                                        <option style="font-family:Calibri" value="Calibri">Calibri</option>
+                                        <option style="font-family:Candara" value="Candara">Candara</option>
+                                        <option style="font-family:Century Gothic" value="Century Gothic">Century Gothic</option>
+                                        <option style="font-family:Consolas" value="Consolas">Consolas</option>
+                                        <option style="font-family:Dejavu Sans" value="Dejavu Sans">Dejavu Sans</option>
+                                        <option style="font-family:Franklin Gothic" value="Franklin Gothic">Franklin Gothic</option>
+                                        <option style="font-family:Gill Sans" value="Gill Sans">Gill Sans</option>
+                                        <option style="font-family:Helvetica" value="Helvetica">Helvetica</option>
+                                        <option style="font-family:Lucida Sans" value="Lucida Sans">Lucida Sans</option>
+                                        <option style="font-family:MS Sans Serif" value="MS Sans Serif">MS Sans Serif</option>
+                                        <option style="font-family:Neue Helvetica" value="Neue Helvetica">Neue Helvetica</option>
+                                        <option style="font-family:Optima" value="Optima">Optima</option>
+                                        <option style="font-family:Segoe UI" value="Segoe UI">Segoe UI</option>
+                                        <option style="font-family:Tahoma" value="Tahoma">Tahoma</option>
+                                        <option style="font-family:Trebuchet MS" value="Trebuchet MS">Trebuchet MS</option>
+                                        <option style="font-family:Verdana" value="Verdana">Verdana</option>
+                                    </select>
+                                    <span class="d-block">
+                                        <small class="ml-2">e.g. </small>
+                                        <small class="" id="fontPlaceholder">„The five boxing wizards jump quickly.“</small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3" style="display: flex; flex-direction: column; justify-content: space-around">
+                                <label for="slider">
+                                    <label>Font Size: </label>
+                                    <a id="font_size" class="text-danger font-weight-bold pl-1">{{ modules['quotes'].config['design_config']['font_size'] }}</a>
+                                </label>
+                                <input type="range" min="12" max="28" step="2" value="{{ modules['quotes'].config['design_config']['font_size'] }}" id="slider" name="font_size" style="width: 80%;">
+                                <a class="ml-2 font-italic" id="sampleText"><small>The five boxing wizards jump quickly.
+
+                                </small></a>
+                            </div>
+                            <div class="col-lg-3 pr-md-1">
+                                <div class="form-group">
+                                    <label>Background Color</label>
+                                    <input type="color" name="background_color" class="form-control bg-dark" value="{{ modules['quotes'].config['design_config']['background_color'] }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card">
+                    <div class="card-header  d-flex justify-content-between">
+                        <h4 class="title">Module Settings</h4>
+                        <li class="dropdown nav-item" style="list-style: none">
+                            <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <div class="d-none d-lg-block d-xl-block"></div>
+                                <i class="fas fa-cogs"></i>
+                                <p class="d-lg-none">
+                                    Notifications
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-navbar bg-dark">
+                                <li class="nav-link"><a href="#" class="nav-item text-white">Default Settings</a>/li>
+                                <li class="nav-link"><a href="#" class="nav-item text-center text-white">Get help</a></li>
+                            </ul>
+                        </li>
+                    </div>
+
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="example-getting-started">Filter specific authors</label><br><select id="example-getting-started" multiple="multiple">
+                                    <option value="cheese">Cheese</option>
+                                    <option value="tomatoes">Tomatoes</option>
+                                    <option value="mozarella">Mozzarella</option>
+                                    <option value="mushrooms">Mushrooms</option>
+                                    <option value="pepperoni">Pepperoni</option>
+                                    <option value="onions">Onions</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="card-body">
+                                <div class="col-lg-12">
+                                    <label for="slider" class="d-block">
+                                        <a>Maximum length of quote:</a>
+                                        <a id="maximumLengthValue" class="text-danger font-weight-bold pl-1">{{ modules['quotes'].config['module_config']['max_quote_length'] }}</a>
+                                    </label>
+                                    <div>
+                                        <input type="range" min="50" max="120" step="10" value="{{ modules['quotes'].config['module_config']['max_quote_length'] }}" id="quoteSlider" name="max_quote_length">
+                                        <small id="sampleQuote" class="d-block">Know that although in the eternal scheme of things you are small, you are also unique and irreplaceable, as are all your fellow humans everywhere in the world.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive ps">
+                            <table class="table tablesorter" id="">
+                                <col style="width:60%">
+                                <col style="width:30%">
+                                <col style="width:10%">
+                                <thead class=" text-primary">
+                                <tr>
+                                    <th>
+                                        Quote
+                                    </th>
+                                    <th class="text-center">
+                                        Author
+                                    </th>
+                                    <th class="text-center">
+                                        Quote length
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="quoteData">
+
+                                </tbody>
+                            </table>
+                            <div class="ps__rail-x" style="left: 0; bottom: 0;"><div class="ps__thumb-x" tabindex="0" style="left: 0; width: 0;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="sticky-top">
+                    <div class="card card-user">
+                        <div class="card-body">
+                            <div class="author">
+                                <div class="block block-one"></div>
+                                <div class="block block-two"></div>
+                                <div class="block block-three"></div>
+                                <div class="block block-four"></div>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a>Module Preview</a>
+                            <a href="#">Reload<i class="fas fa-sync pl-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="fixed-bottom text-right">
+                    <button class="btn btn-primary m-3">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="/static/assets/js/modules/quotes-module.js"></script>
+    <script src="/static/assets/js/general-functions.js"></script>
+
+    <script>
+        {#    default conf    #}
+        let configFontFamily = "{{ modules['quotes'].config['design_config']['font_family'] }}";
+        let configFontSize = "{{ modules['quotes'].config['design_config']['font_size'] }}";
+        let configBackgroundColor = "{{ modules['quotes'].config['design_config']['background_color'] }}";
+        let configVisibility = "{{ modules['quotes'].config['general_config']['visibility'] }}";
+        let gridSystem = "{{ modules['quotes'].config['general_config']['grid_place'] | safe}}";
+        load_default_conf(configFontFamily, configFontSize, configBackgroundColor, configVisibility, gridSystem)
+
+        {#   module configuration   #}
+        $(document).ready(function() {
+            sliceQuote({{ modules['quotes'].config['module_config']['max_quote_length'] }});
+
+            let quotes = {{ modules['quotes'].fetch_all_quotes(10) | safe }};
+            let quotesHTML = "";
+            for(let i = 0; i <= quotes.length; i++){
+                let author = quotes[i]['author']
+                let text = quotes[i]['text']
+                document.getElementById('quoteData').innerHTML += "<tr><td>" + text + "</td><td>" + author + "</td><td>" + text.length + "</td></tr>";
+            }
+        });
+
+    </script>
+{% endblock javascripts %}
