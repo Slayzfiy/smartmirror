@@ -6,7 +6,7 @@
    "design_config": {
       "font_size": "18",
       "font_family": "Consolas",
-      "background_color": "#9f2323"
+      "background_color": "#000000"
    },
    "module_config": {
       "watchlist": [

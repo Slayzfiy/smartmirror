@@ -9,6 +9,7 @@
 
 
 from FlaskManager import FlaskManager
+from static.modules.animator.animator import Animator
 from static.modules.mail.mail import Mail
 from static.modules.quotes.quotes import Quotes
 from static.modules.clock.clock import Clock
@@ -25,13 +26,15 @@ class Mirror:
         self.Quotes = Quotes('quotes')
         self.Mail = Mail('mail')
         self.Stocks = Stocks('stocks')
+        self.Animator = Animator('animator')
         modules = {
             "clock": self.Clock,
             "todo": self.ToDoManager,
             "weather": self.Weather,
             "quotes": self.Quotes,
             "mail": self.Mail,
-            "stocks": self.Stocks
+            "stocks": self.Stocks,
+            "animator": self.Animator
         }
         FlaskManager(modules)
 

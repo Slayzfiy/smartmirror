@@ -5,12 +5,12 @@
     <script src="/static/assets/js/core/jquery.min.js"></script>
     <meta charset="utf-8">
     <title>Front End - Smart Mirror</title>
-</head>
-    <body>
-        <style>
+    <style>
             .gridContainer{
                 display: grid;
                 grid-template-columns: auto auto auto;
+                min-height: 100vh;
+
             }
             .grid-item{
                 border: 1px solid rgba(0, 0, 0, 0.8);
@@ -57,34 +57,18 @@
 
 
 
-            .weatherContainer{
-
-            }
-            .clockContainer{
-
-            }
-            .stockContainer{
-
-            }
-            .quotesContainer{
-
-            }
-            .todoContainer{
-
-            }
-            .mailsContainer{
-
-            }
 
 
-        </style>
+    </style>
+</head>
+    <body>
 
         <div class="gridContainer">
             <div class="grid-item todoContainer">
                 {% include 'subsitesModules/todo_module.html' %}
             </div>
-            <div class="grid-item mailsContainer">
-                {% include 'subsitesModules/mails_module.html' %}
+            <div class="grid-item animatorContainer">
+                {% include 'subsitesModules/animator_module.html' %}
             </div>
             <div class="grid-item clockContainer">
                 {% include 'subsitesModules/clock_module.html' %}
@@ -182,6 +166,15 @@
                 $("#stockImagePlaceholder").attr("src", rawStock['logoURI'])
             }
 
+            function handle_animator(animatorData){
+
+                $("#animator-image").attr("src", animatorData)
+
+
+                $("#stockImagePlaceholder").attr("src", rawStock['logoURI'])
+            }
+
+
             function load_mails(){
                 $.ajax({
                     async: true,
@@ -257,6 +250,21 @@
                 });
             }
 
+            function load_animator(){
+                $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "/animator",
+                    data: {"type": "fetch_image"},
+                    success:function (response){
+                        handle_animator(response)
+                    },
+                    error:function (){
+                        alert('ererrror')
+                    }
+                });
+            }
+
             function clock_stuff(){
                 let moduleBackgroundColor = "{{ modules['clock'].config['module_config']['clock_background_color'] }}";
                 let modulePointerColor = "{{ modules['clock'].config['module_config']['pointer_color'] }}";
@@ -283,6 +291,7 @@
             load_quotes();
             load_weather();
             load_stocks();
+            load_animator();
             clock_stuff();
         }
 
@@ -315,6 +324,7 @@
                 let quotes_config = config[3]["quotes"]["general_config"]
                 let mail_config = config[4]["mail"]["general_config"]
                 let stock_config = config[5]["stocks"]["general_config"]
+                let animator_config = config[6]["animator"]["general_config"]
 
                 if (clock_config['visibility'] === "off"){ $(".clockContainer").remove()}
                 if (todo_config['visibility'] === "off"){$(".todoContainer").remove()}
@@ -322,6 +332,7 @@
                 if (quotes_config['visibility'] === "off"){$(".quotesContainer").remove()}
                 if (mail_config['visibility'] === "off"){$(".mailsContainer").remove()}
                 if (stock_config['visibility'] === "off"){$(".stockContainer").remove()}
+                if (animator_config['visibility'] === "off"){$(".animatorContainer").remove()}
 
                 $(".todoContainer").css("order", parseInt(clock_config['grid_place']))
                 $(".clockContainer").css("order", parseInt(todo_config['grid_place']))
@@ -329,6 +340,7 @@
                 $(".quotesContainer").css("order", parseInt(quotes_config['grid_place']))
                 $(".stockContainer").css("order", parseInt(mail_config['grid_place']))
                 $(".weatherContainer").css("order", parseInt(stock_config['grid_place']))
+                $(".animatorContainer").css("order", parseInt(animator_config['grid_place']))
             }
 
             function apply_design_config(config){
@@ -338,6 +350,7 @@
                 let quotes_config = config[3]["quotes"]["design_config"]
                 let mail_config = config[4]["mail"]["design_config"]
                 let stock_config = config[5]["stocks"]["design_config"]
+                let animator_config = config[6]["animator"]["design_config"]
 
 
 
@@ -346,27 +359,33 @@
                     "font-size": clock_config["font_size"],
                     "font-family": clock_config["font_family"]
                 })
-                 $(".todoContainer").css({
+                $(".todoContainer").css({
                     "background": todo_config["background_color"],
                     "font-size": todo_config["font_size"],
                     "font-family": todo_config["font_family"]
                 })
-                 $(".weatherContainer").css({
+                $(".weatherContainer").css({
                     "background": weather_config["background_color"],
                     "font-size": weather_config["font_size"],
                     "font-family": weather_config["font_family"]
                 })
-                 $(".stockContainer").css({
+                $(".stockContainer").css({
                     "background": stock_config["background_color"],
                     "font-size": stock_config["font_size"],
                     "font-family": stock_config["font_family"]
                 })
-                 $(".quotesContainer").css({
+                $(".quotesContainer").css({
                     "background": quotes_config["background_color"],
                     "font-size": quotes_config["font_size"],
                     "font-family": quotes_config["font_family"]
                 })
-                
+
+                $(".animatorContainer").css({
+                    "background": animator_config["background_color"],
+                    "font-size": animator_config["font_size"],
+                    "font-family": animator_config["font_family"]
+                })
+
             }
 
         }

@@ -29,7 +29,7 @@ class FlaskManager:
             return render_template('subsitesModules/index.html', modules=self.modules)
 
         @self.app.route('/config', methods=["GET", "POST"])
-        def handle_config():
+        def handle_module_config():
             if request.method == "POST":
                 form = request.form
                 print(form)
@@ -59,6 +59,16 @@ class FlaskManager:
         @self.app.route('/dashboard.html')
         def dashboard():
             return render_template('subsitesConfig/dashboard.html', modules=self.modules)
+
+        @self.app.route('/animator', methods=["GET", "POST"])
+        def animator():
+            if request.method == "GET":
+                response = self.modules['animator'].handle_get_method(request.args)
+                print(response)
+                if response:
+                    return response
+
+            return render_template('subsitesConfig/animator.html', modules=self.modules)
 
         @self.app.route('/clock', methods=["GET", "POST"])
         def clock():

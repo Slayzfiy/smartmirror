@@ -1,7 +1,7 @@
 {
    "general_config": {
       "visibility": "on",
-      "grid_place": "1"
+      "grid_place": "5"
    },
    "design_config": {
       "font_size": "12",
@@ -9,14 +9,6 @@
       "background_color": "#000000"
    },
    "module_config": {
-      "entries": [
-         "schlawina",
-         "tests",
-         "fasdfsadf",
-         "fasdfasdf",
-         "asfasdfdsf",
-         "test",
-         "test"
-      ]
+      "image_source": "https://s8.favim.com/orig/150823/adorable-background-cute-dancing-Favim.com-3166025.gif"
    }
 }
