@@ -10,11 +10,11 @@
                 display: grid;
                 grid-template-columns: auto auto auto;
                 min-height: 100vh;
-
+                max-height: 100vh;
+                max-width: 100vw;
             }
             .grid-item{
                 border: 1px solid rgba(0, 0, 0, 0.8);
-                padding: 20px;
                 font-size: 30px;
                 text-align: center;
             }
@@ -29,8 +29,6 @@
                 position: relative;
                 padding: 5px 10%;
                 border-radius: 20px;
-                background: var(--bg_grey);
-                color: var(--text_light);
                 list-style: none;
             }
             figcaption {
@@ -38,57 +36,74 @@
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
             }
-            .city-temp {
-                font-size: 5rem;
-                color: var(--text_light);
-            }
+
             .city sup {
                 font-size: 0.5em;
             }
             .city-name sup {
                 padding: 0.2em 0.6em;
                 border-radius: 30px;
-                color: var(--text_light);
+                color: white !important;
                 background: var(--orange);
             }
-            .city-icon {
-                color: var(--text_light);
+
+            #cityPlaceholder{
+                color: white;
+            }
+
+            .quotesText{
+                color: white !important;
+                font-size: 30px;
+            }
+
+            #authorPlaceholder{
+                font-style: italic;
+                font-weight: 250;
+                font-size: 25px;
             }
 
 
-
-
+            #highlightContainer {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+            }
 
     </style>
+
+
+
 </head>
-    <body>
+    <body style="background: black">
+        <div id="highlightContainer" style="display: none">
+
+        </div>
 
         <div class="gridContainer">
-            <div class="grid-item todoContainer">
+            <div class="grid-item todoContainer" id="todoContainer">
                 {% include 'subsitesModules/todo_module.html' %}
             </div>
-            <div class="grid-item animatorContainer">
+            <div class="grid-item animatorContainer" id="animatorContainer">
                 {% include 'subsitesModules/animator_module.html' %}
             </div>
-            <div class="grid-item clockContainer">
+            <div class="grid-item clockContainer" id="clockContainer">
                 {% include 'subsitesModules/clock_module.html' %}
             </div>
-            <div class="grid-item weatherContainer">
+            <div class="grid-item weatherContainer" id="weatherContainer">
                 {% include 'subsitesModules/weather_module.html' %}
             </div>
-            <div class="grid-item stockContainer">
+            <div class="grid-item stockContainer" id="stockContainer">
                 {% include 'subsitesModules/stock_module.html' %}
             </div>
-            <div class="grid-item quotesContainer">
+            <div class="grid-item quotesContainer" id="quotesContainer">
                 {% include 'subsitesModules/quotes_module.html' %}
             </div>
         </div>
-
-        <div id="configuration-button" style="position: fixed;bottom: 0">
-            <a class="p-3" style="position: absolute; bottom:0;" href="/dashboard.html">
-                <button type="button" class="btn btn-primary" >Configuration</button>
-            </a>
-        </div>
+{#        <div id="configuration-button" style="position: fixed;bottom: 0">#}
+{#            <a class="p-3" style="position: absolute; bottom:0;" href="/dashboard.html">#}
+{#                <button type="button" class="btn btn-primary" >Configuration</button>#}
+{#            </a>#}
+{#        </div>#}
     </body>
 
     <script src="{{url_for('static', filename='vendor/own/minified/scripts.min.js')}}"></script>
@@ -167,11 +182,8 @@
             }
 
             function handle_animator(animatorData){
-
-                $("#animator-image").attr("src", animatorData)
-
-
-                $("#stockImagePlaceholder").attr("src", rawStock['logoURI'])
+                {#$("#animator-image").attr("src", animatorData)#}
+                {#$("#stockImagePlaceholder").attr("src", rawStock['logoURI'])#}
             }
 
 
@@ -334,13 +346,18 @@
                 if (stock_config['visibility'] === "off"){$(".stockContainer").remove()}
                 if (animator_config['visibility'] === "off"){$(".animatorContainer").remove()}
 
-                $(".todoContainer").css("order", parseInt(clock_config['grid_place']))
-                $(".clockContainer").css("order", parseInt(todo_config['grid_place']))
-                $(".mailsContainer").css("order", parseInt(weather_config['grid_place']))
-                $(".quotesContainer").css("order", parseInt(quotes_config['grid_place']))
-                $(".stockContainer").css("order", parseInt(mail_config['grid_place']))
-                $(".weatherContainer").css("order", parseInt(stock_config['grid_place']))
-                $(".animatorContainer").css("order", parseInt(animator_config['grid_place']))
+                {##}
+                {#$(".todoContainer").css("order", parseInt(clock_config['grid_place']))#}
+                {#$(".clockContainer").css("order", parseInt(todo_config['grid_place']))#}
+                {#$(".mailsContainer").css("order", parseInt(weather_config['grid_place']))#}
+                {#$(".quotesContainer").css("order", parseInt(quotes_config['grid_place']))#}
+                {#$(".stockContainer").css("order", parseInt(mail_config['grid_place']))#}
+                {#$(".weatherContainer").css("order", parseInt(stock_config['grid_place']))#}
+                {#$(".animatorContainer").css("order", parseInt(animator_config['grid_place']))#}
+
+
+                
+
             }
 
             function apply_design_config(config){
@@ -394,6 +411,35 @@
         module_data_load();
 
 
+    </script>
+
+    <script>
+        $('.grid-item').click(function (){
+            let elementsToHide = $('.grid-item');
+
+            for(let i = 0; i < elementsToHide.length; i++){
+                if (elementsToHide[i].id !== ($(this).attr("id"))){
+                    $(elementsToHide[i]).slideUp();
+                }
+            }
+            $(".gridContainer").css({
+                "justify-content": "center",
+                "align-content": "center"
+            })
+
+            setTimeout(function () {
+                for(let i = 0; i < elementsToHide.length; i++){
+                    if (elementsToHide[i].id !== ($(this).attr("id"))){
+                        $(elementsToHide[i]).slideDown();
+                    }
+                }
+                $(".gridContainer").css({
+                    "justify-content": "unset",
+                    "align-content": "unset"
+                })
+            }, 2000)
+
+        })
     </script>
 
 </html>
