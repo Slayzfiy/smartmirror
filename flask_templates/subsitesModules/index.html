@@ -414,6 +414,58 @@
     </script>
 
     <script>
+        $("body").keydown(function(event){
+            let index = event.which - 49;
+            let highligthEl = "";
+            if (index === 0){
+                highligthEl = "todoContainer";
+            }
+            if (index === 1){
+                highligthEl = "animatorContainer";
+            }
+            if (index === 2){
+                highligthEl = "clockContainer";
+            }
+            if (index === 3){
+                highligthEl = "weatherContainer";
+            }
+            if (index === 4){
+                highligthEl = "weatherContainer";
+            }
+            if (index === 5){
+                highligthEl = "stockContainer";
+            }
+            if (index === 6){
+                highligthEl = "quotesContainer";
+            }
+
+            let elementsToHide = $('.grid-item');
+            for(let i = 0; i < elementsToHide.length; i++){
+                if (elementsToHide[i].id !== highligthEl){
+                    $(elementsToHide[i]).slideUp();
+                }
+            }
+            $(".gridContainer").css({
+                "justify-content": "center",
+                "align-content": "center"
+            })
+
+            setTimeout(function () {
+                for(let i = 0; i < elementsToHide.length; i++){
+                    if (elementsToHide[i].id !== index){
+                        $(elementsToHide[i]).slideDown();
+                    }
+                }
+                $(".gridContainer").css({
+                    "justify-content": "unset",
+                    "align-content": "unset"
+                })
+            }, 2000)
+
+        })
+
+
+
         $('.grid-item').click(function (){
             let elementsToHide = $('.grid-item');
 
@@ -438,7 +490,6 @@
                     "align-content": "unset"
                 })
             }, 2000)
-
         })
     </script>
 
