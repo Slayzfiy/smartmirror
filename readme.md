@@ -11,11 +11,7 @@
 
 
 
-[TOCM]
-
-[TOC]
-
-#Installation
+## Installation
 ### From source
 #### Clone repository
 `$ git clone https://github.com/Slayzfiy/smartmirror.git `
