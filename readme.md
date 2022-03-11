@@ -13,11 +13,11 @@
 
 ## Installation
 ### From source
-#### Clone repository
+#### 1. Clone repository
 `$ git clone https://github.com/Slayzfiy/smartmirror.git `
-#### Open repository
+#### 2. Open repository directory
 `$ cd smartmirror`
-#### Install requirements
+#### 3. Install requirements
 `$ pip install -r requirements.txt`
 #### Start app
 `$ python app.py`
@@ -28,13 +28,13 @@ open e.g: 192.168.88.30:1080*
 ------------
 
 ### Docker 
-#### Clone repository
+#### 1. Clone repository
 `$ git clone https://github.com/Slayzfiy/smartmirror.git `
-#### Open repository
+#### 2. Open repository directory
 `$ cd smartmirror`
-#### Build
+#### 3. Build
 `$ docker build -t smartmirror:latest . `
-#### Start container
+#### 4. Start container
 `$ docker run -p 8000:5000  smartmirror:latest`
 *if you close command promt, the container will be stopped*
 
