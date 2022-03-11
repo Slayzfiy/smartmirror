@@ -12,6 +12,10 @@
 
 
 ## Installation
+[Install from source](#from-source)
+
+[Install with docker](#docker)
+
 ### From source
 #### 1. Clone repository
 `$ git clone https://github.com/Slayzfiy/smartmirror.git `
