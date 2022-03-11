@@ -10,7 +10,7 @@
 # Smartmirror
 
 
-
+[<img src="https://i.imgur.com/tLravU7.png[<img src="http://www.google.com.au/images/nav_logo7.png">](http://google.com.au/)">](http://google.com.au/)
 ## Installation
 [Install from source](#from-source)
 
