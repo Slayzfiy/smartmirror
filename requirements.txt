@@ -9,3 +9,4 @@ bs4~=0.0.1
 future~=0.18.2
 imap-tools~=0.41.0
 yfinance
+pyaudio

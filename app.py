@@ -16,6 +16,7 @@ from static.modules.clock.clock import Clock
 from static.modules.stocks.stocks import Stocks
 from static.modules.todo.to_do import ToDoManager
 from static.modules.weather.weather import Weather
+from static.modules.voicinger.voicinger import Voicinger
 
 
 class Mirror:
@@ -27,6 +28,7 @@ class Mirror:
         self.Mail = Mail('mail')
         self.Stocks = Stocks('stocks')
         self.Animator = Animator('animator')
+        self.Voicinger = Voicinger('voicinger')
         modules = {
             "clock": self.Clock,
             "todo": self.ToDoManager,
@@ -34,7 +36,8 @@ class Mirror:
             "quotes": self.Quotes,
             "mail": self.Mail,
             "stocks": self.Stocks,
-            "animator": self.Animator
+            "animator": self.Animator,
+            "voicinger": self.Voicinger
         }
         FlaskManager(modules)
 
