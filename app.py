@@ -6,7 +6,9 @@
 # News (Upday)
 #
 # Sudoku or modules games
-
+import asyncio
+import threading
+import time
 
 from FlaskManager import FlaskManager
 from static.modules.animator.animator import Animator
@@ -21,6 +23,7 @@ from static.modules.voicinger.voicinger import Voicinger
 
 class Mirror:
     def __init__(self):
+        self.FlaskManager = None
         self.Clock = Clock('clock')
         self.ToDoManager = ToDoManager('todo')
         self.Weather = Weather('weather')
@@ -28,7 +31,8 @@ class Mirror:
         self.Mail = Mail('mail')
         self.Stocks = Stocks('stocks')
         self.Animator = Animator('animator')
-        self.Voicinger = Voicinger('voicinger')
+        self.Voicinger = None
+
         modules = {
             "clock": self.Clock,
             "todo": self.ToDoManager,
@@ -37,10 +41,29 @@ class Mirror:
             "mail": self.Mail,
             "stocks": self.Stocks,
             "animator": self.Animator,
-            "voicinger": self.Voicinger
         }
-        FlaskManager(modules)
+
+        self.FlaskManager = FlaskManager(modules)
+
+    def run(self):
+        self.FlaskManager.run()
+
+    def start_voice(self):
+        self.Voicinger = Voicinger('voicinger')
+
+        while 1:
+            result = self.Voicinger.record_voice()
+            self.FlaskManager.socketio.emit("trigger_focus_animation", {"module": result})
+            time.sleep(1)
 
 
 if __name__ == '__main__':
     mirror = Mirror()
+    t1 = threading.Thread(target=mirror.run)
+    t2 = threading.Thread(target=mirror.start_voice)
+
+    t1.start()
+    t2.start()
+
+#     thread1 = webserver
+#     thread2 = mikrofon im Hintergrund
