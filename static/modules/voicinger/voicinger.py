@@ -1,20 +1,89 @@
+import asyncio
+import logging
+import time
+from concurrent.futures import thread
+
 from static.modules.module import *
 import speech_recognition as sr
+import sphinxbase
+import pocketsphinx
+import requests
+
+KEYWORDS = [
+    "uhrzeit",
+    "aktien",
+    "spruch",
+    "sprüche",
+    "todo",
+    "eintrag",
+    "einträge",
+    "wetter"
+    "animation",
+    "animator",
+
+]
+
+
+def recognize_speech_from_mic(recognizer, microphone):
+    """Transcribe speech from recorded from `microphone`.
+
+    Returns a dictionary with three keys:
+    "success": a boolean indicating whether or not the API request was
+               successful
+    "error":   `None` if no error occured, otherwise a string containing
+               an error message if the API could not be reached or
+               speech was unrecognizable
+    "transcription": `None` if speech could not be transcribed,
+               otherwise a string containing the transcribed text
+    """
+    # check that recognizer and microphone arguments are appropriate type
+    if not isinstance(recognizer, sr.Recognizer):
+        raise TypeError("`recognizer` must be `Recognizer` instance")
+
+    if not isinstance(microphone, sr.Microphone):
+        raise TypeError("`microphone` must be `Microphone` instance")
+
+    # adjust the recognizer sensitivity to ambient noise and record audio
+    # from the microphone
+    with microphone as source:
+        recognizer.adjust_for_ambient_noise(source)
+        audio = recognizer.listen(source)
+
+    # set up the response object
+    response = {
+        "success": True,
+        "error": None,
+        "transcription": None
+    }
+
+    # try recognizing the speech in the recording
+    # if a RequestError or UnknownValueError exception is caught,
+    #     update the response object accordingly
+    try:
+        response["transcription"] = recognizer.recognize_google(audio, language="de-DE")
+    except sr.RequestError:
+        # API was unreachable or unresponsive
+        response["success"] = False
+        response["error"] = "API unavailable"
+    except sr.UnknownValueError:
+        # speech was unintelligible
+        response["error"] = "Unable to recognize speech"
+
+    return response
 
 
 class Voicinger(Module):
     def __init__(self, directory_path):
         super().__init__(directory_path)
-        # self.config = json.load(open(self.path_helper("config.json"), "r"))
 
-    def test_mic(self):
+    def record_voice(self):
         # https://realpython.com/python-speech-recognition/#working-with-microphones
-        mic = sr.Microphone()
-        r = sr.Recognizer()
 
-        with mic as source:
-            audio = r.listen(source)
-            r.recognize_google(audio)
-
-
-
+        recognizer = sr.Recognizer()
+        microphone = sr.Microphone(sample_rate=48000)
+        while True:
+            with sr.Microphone() as source:
+                guess = recognize_speech_from_mic(recognizer, microphone)
+                for x in KEYWORDS:
+                    if guess["transcription"] and x in guess["transcription"].lower():
+                        return x
