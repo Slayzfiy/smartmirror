@@ -412,47 +412,27 @@
 
 
     </script>
-
+    <script src="/static/assets/js/core/socket.io.js"></script>
     <script>
-        $("body").keydown(function(event){
-            let index = event.which - 49;
-            let highligthEl = "";
-            if (index === 0){
-                highligthEl = "todoContainer";
-            }
-            if (index === 1){
-                highligthEl = "animatorContainer";
-            }
-            if (index === 2){
-                highligthEl = "clockContainer";
-            }
-            if (index === 3){
-                highligthEl = "weatherContainer";
-            }
-            if (index === 4){
-                highligthEl = "weatherContainer";
-            }
-            if (index === 5){
-                highligthEl = "stockContainer";
-            }
-            if (index === 6){
-                highligthEl = "quotesContainer";
-            }
-
+        function focus_module(highlightEl){
             let elementsToHide = $('.grid-item');
+
+            // Hiding modules
             for(let i = 0; i < elementsToHide.length; i++){
-                if (elementsToHide[i].id !== highligthEl){
+                if (elementsToHide[i].id !== highlightEl){
                     $(elementsToHide[i]).slideUp();
                 }
             }
+
             $(".gridContainer").css({
                 "justify-content": "center",
                 "align-content": "center"
             })
 
+            // Unhide modules after 2000ms
             setTimeout(function () {
                 for(let i = 0; i < elementsToHide.length; i++){
-                    if (elementsToHide[i].id !== index){
+                    if ($(elementsToHide)[i].id !== highlightEl){
                         $(elementsToHide[i]).slideDown();
                     }
                 }
@@ -460,38 +440,50 @@
                     "justify-content": "unset",
                     "align-content": "unset"
                 })
+
             }, 2000)
+        }
 
-        })
+        $(document).ready(function(){
+            var socket = io('ws://' + location.host);
+            socket.on('trigger_focus_animation', data => {
+                var received_module = JSON.stringify(data["module"]);
+                var highligthEl = received_module.replaceAll('"', "")
 
+                switch (highligthEl){
+                    case "uhrzeit":
+                    case "zeit":
+                        highligthEl = "clockContainer";
+                        break;
 
+                    case "sprüche":
+                    case "spruch":
+                        highligthEl = "quoteContainer";
+                        break;
 
-        $('.grid-item').click(function (){
-            let elementsToHide = $('.grid-item');
+                    case "animation":
+                    case "animator":
+                        highligthEl = "animatorContainer";
+                        break;
 
-            for(let i = 0; i < elementsToHide.length; i++){
-                if (elementsToHide[i].id !== ($(this).attr("id"))){
-                    $(elementsToHide[i]).slideUp();
+                    case "wetter":
+                        highligthEl = "weatherContainer";
+                        break;
+
+                    case "aktien":
+                    case "stocks":
+                        highligthEl = "stockContainer";
+                        break;
+
+                    case "todo":
+                    case "einträge":
+                    case "eintrag":
+                        highligthEl = "todoContainer";
+                        break;
                 }
-            }
-            $(".gridContainer").css({
-                "justify-content": "center",
-                "align-content": "center"
-            })
-
-            setTimeout(function () {
-                for(let i = 0; i < elementsToHide.length; i++){
-                    if (elementsToHide[i].id !== ($(this).attr("id"))){
-                        $(elementsToHide[i]).slideDown();
-                    }
-                }
-                $(".gridContainer").css({
-                    "justify-content": "unset",
-                    "align-content": "unset"
-                })
-            }, 2000)
-        })
+                focus_module(highligthEl);
+            });
+        });
     </script>
-
 </html>
 
