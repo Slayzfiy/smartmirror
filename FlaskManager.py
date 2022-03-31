@@ -1,13 +1,16 @@
+import asyncio
 import json
 import os
 from urllib.parse import unquote
+
+from flask_socketio import SocketIO, emit
 
 from flask import Flask, render_template, request, redirect, flash, get_flashed_messages, send_file, current_app, \
     send_from_directory, url_for
 
 import json
-
 from werkzeug.utils import secure_filename
+
 
 
 class FlaskManager:
@@ -17,11 +20,11 @@ class FlaskManager:
             import_name='app',
             template_folder='flask_templates'
         )
+        self.socketio = SocketIO(self.app)
 
         self.modules = modules
-        self.app.debug = True
+        self.app.debug = False
         self.setup_functions()
-        self.app.run(host="0.0.0.0", port=1080, debug=True, use_reloader=True)
 
     def setup_functions(self):
         @self.app.route('/')
@@ -53,8 +56,6 @@ class FlaskManager:
             if 'file' not in request.files:
                 print("here")
                 return "fehler", 200
-
-
 
         @self.app.route('/dashboard.html')
         def dashboard():
@@ -160,3 +161,7 @@ class FlaskManager:
         @self.app.route('/config.html', methods=['GET'])
         def configuration_html():
             return render_template('config.html', modules=self.modules)
+
+    def run(self):
+        self.app.run(host="0.0.0.0", port=1080, debug=False)
+        self.socketio.run(self.app)
