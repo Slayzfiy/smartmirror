@@ -17,7 +17,7 @@ KEYWORDS = [
     "todo",
     "eintrag",
     "einträge",
-    "wetter"
+    "wetter",
     "animation",
     "animator",
 
@@ -77,8 +77,6 @@ class Voicinger(Module):
         super().__init__(directory_path)
 
     def record_voice(self):
-        # https://realpython.com/python-speech-recognition/#working-with-microphones
-
         recognizer = sr.Recognizer()
         microphone = sr.Microphone(sample_rate=48000)
         while True:

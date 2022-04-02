@@ -1,0 +1,15 @@
+
+
+sudo apt-get install libportaudio0 libportaudio2 libportaudiocpp0 portaudio19-dev
+sudo apt-get install python3-pyaudio
+
+
+2. pocketshpinx
+$ sudo pacman -S swig
+$ pip install pocketsphinx
+$ sudo pacman -S shpinxbase
+
+
+$pip install aioflask
+
+pip install flask-socketio
